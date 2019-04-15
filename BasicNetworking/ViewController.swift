@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         databaseManager.loadPlaces(from: url) { result in
             switch result {
             case .success(let data):
-                print("Data Count: \(data.count)")
+                print("Data Count: \(String(decoding: data, as: UTF8.self))")
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }

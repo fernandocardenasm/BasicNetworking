@@ -9,32 +9,7 @@
 import XCTest
 
 class DatabaseManagerTests: XCTestCase {
-    func test_loadPlaces() {
-        let dataTask = URLSessionDataTaskMock()
-        let session = URLSessionMock(newDataTask: dataTask)
-        let dataBaseManager = DatabaseManager(session: session)
-        let url = URL(fileURLWithPath: "url")
-
-        session.data = nil
-        session.response = nil
-        session.error = NSError(domain: "", code: 0, userInfo: nil)
-
-        let failureExp = expectation(description: "a failure should be returned")
-        dataBaseManager.loadPlaces(from: url) { result in
-            switch result {
-            case .success:
-                XCTFail("It should not succeed")
-            case .failure:
-                failureExp.fulfill()
-            }
-        }
-        wait(for: [failureExp], timeout: 0.1)
-
-        XCTAssertEqual(session.url, url)
-        XCTAssertTrue(dataTask.resumeWasCalled)
-    }
-
-    func test_loadPlaces_notNil() {
+    func test_loadPlaces_success() {
         let dataTask = URLSessionDataTaskMock()
         let session = URLSessionMock(newDataTask: dataTask)
         let dataBaseManager = DatabaseManager(session: session)
@@ -58,17 +33,32 @@ class DatabaseManagerTests: XCTestCase {
         XCTAssertEqual(session.url, url)
         XCTAssertTrue(dataTask.resumeWasCalled)
     }
-}
 
-// class NetworkSessionServiceMock: NetworkSessionService {
-//    var data: Data?
-//    var response: URLResponse?
-//    var error: Error?
-//
-//    func loadPlaces(from url: URL, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) {
-//        completionHandler(data, response, error)
-//    }
-// }
+    func test_loadPlaces_failure() {
+        let dataTask = URLSessionDataTaskMock()
+        let session = URLSessionMock(newDataTask: dataTask)
+        let dataBaseManager = DatabaseManager(session: session)
+        let url = URL(fileURLWithPath: "url")
+
+        session.data = nil
+        session.response = nil
+        session.error = NSError(domain: "", code: 0, userInfo: nil)
+
+        let failureExp = expectation(description: "a failure should be returned")
+        dataBaseManager.loadPlaces(from: url) { result in
+            switch result {
+            case .success:
+                XCTFail("It should not succeed")
+            case .failure:
+                failureExp.fulfill()
+            }
+        }
+        wait(for: [failureExp], timeout: 0.1)
+
+        XCTAssertEqual(session.url, url)
+        XCTAssertTrue(dataTask.resumeWasCalled)
+    }
+}
 
 class URLSessionMock: URLSessionProtocol {
     var request: URLRequest?
