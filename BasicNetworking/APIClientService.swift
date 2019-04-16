@@ -9,28 +9,27 @@ import Foundation
 
 protocol APIClientService {
     // GET
-    func get<T: APIRequest>(_ request: T, completion: Result<T.Response, Error>)
-
-    // POST
-    func submit<T: APIRequest, M: Encodable>(_ request: T, object: M, completion: Result<T.Response, Error>)
-
-    // PUT
-    func update<T: APIRequest, M: Encodable>(_ request: T, object: M, completion: Result<T.Response, Error>)
+    func send<T: APIRequest>(_ request: T, completion: Result<T.Response, Error>)
 }
 
-class APIClientServiceImpl: APIClientService {
+class MarvelAPIClientServiceImpl: APIClientService {
     let session: URLSessionProtocol
+    let endpoint = "https://gateway.marvel.com:443/v1/public/characters?apikey=bc950974b1ba1d3491bfd681ba43ed03"
 
     init(session: URLSessionProtocol = URLSession(configuration: .default)) {
         self.session = session
     }
 
-    func get<T>(_ request: T, completion: Result<T.Response, Error>) where T: APIRequest {
+    func send<T>(_ request: T, completion: Result<T.Response, Error>) where T: APIRequest {
+
     }
 
-    func submit<T, M>(_ request: T, object: M, completion: Result<T.Response, Error>) where T: APIRequest, M: Encodable {
-    }
+    func makeEndpoint<T: APIRequest>(for request: T) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "host"
+        components.path = request.resourceName
 
-    func update<T, M>(_ request: T, object: M, completion: Result<T.Response, Error>) where T: APIRequest, M: Encodable {
+        return components
     }
 }
