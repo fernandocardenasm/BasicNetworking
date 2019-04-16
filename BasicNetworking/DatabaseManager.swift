@@ -10,12 +10,12 @@ import Foundation
 class DatabaseManager {
     private let session: URLSessionProtocol
 
-    init(session: URLSessionProtocol = URLSession.shared) {
+    init(session: URLSessionProtocol = URLSession(configuration: .default)) {
         self.session = session
     }
 
     func loadPlaces(from url: URL, completionHandler: @escaping ((Result<Data, Error>) -> Void)) {
-        let task = session.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { data, _, error in
             if let error = error {
                 completionHandler(.failure(error))
             }
@@ -26,13 +26,3 @@ class DatabaseManager {
         task.resume()
     }
 }
-
-protocol URLSessionProtocol {
-    typealias DataTaskResult = (Data?, URLResponse?, Error?) -> Void
-
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask
-
-    func dataTask(with url: URL, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask
-}
-
-extension URLSession: URLSessionProtocol { }
