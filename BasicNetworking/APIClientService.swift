@@ -9,7 +9,7 @@ import Foundation
 
 protocol APIClientService {
     // GET
-    func send<T: APIRequest>(_ request: T, completion: Result<T.Response, Error>)
+    func send<T: APIRequest>(_ request: T, completion: @escaping (Result<T.Response, Error>) -> Void)
 }
 
 class MarvelAPIClientServiceImpl: APIClientService {
@@ -19,7 +19,7 @@ class MarvelAPIClientServiceImpl: APIClientService {
         self.session = session
     }
 
-    func send<T>(_ request: T, completion: Result<T.Response, Error>) where T: APIRequest {
+    func send<T>(_ request: T, completion: @escaping (Result<T.Response, Error>) -> Void) where T: APIRequest {
         let endpointURL = makeEndpointURL(for: request)
         
         guard let url = endpointURL else {
@@ -27,7 +27,16 @@ class MarvelAPIClientServiceImpl: APIClientService {
         }
         let task = session.dataTask(with: url) { (data, response, error) in
             if let error = error {
+                completion(.failure(error))
             } else if let data = data {
+                let decoder = JSONDecoder()
+                do {
+                    let characters = try decoder.decode(T.Response.self, from: data)
+                    completion(.success(characters))
+                }
+                catch let decondingError {
+                    completion(.failure(decondingError))
+                }
             }
         }
         task.resume()
@@ -40,4 +49,22 @@ class MarvelAPIClientServiceImpl: APIClientService {
         components.path = request.resourceName + "?apikey=\(GlobalConstants.MarvelAPI.publicKey)"
         return components.url
     }
+}
+
+class GetCharactersRequest: APIRequest {
+    typealias Response = [Character]
+
+    var resourceName: String {
+        return "/characters"
+    }
+
+    let limit: Int
+
+    init(limit: Int = 10) {
+        self.limit = limit
+    }
+}
+
+struct Character: Decodable {
+
 }
