@@ -22,10 +22,12 @@ class MarvelAPIClientServiceImpl: APIClientService {
     func send<T>(_ request: T, completion: @escaping (Result<T.Response, Error>) -> Void) where T: APIRequest {
         let endpointURL = makeEndpointURL(for: request)
         
+        print(endpointURL)
+
         guard let url = endpointURL else {
             return
         }
-        let task = session.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
             } else if let data = data {
@@ -33,8 +35,7 @@ class MarvelAPIClientServiceImpl: APIClientService {
                 do {
                     let characters = try decoder.decode(T.Response.self, from: data)
                     completion(.success(characters))
-                }
-                catch let decondingError {
+                } catch let decondingError {
                     completion(.failure(decondingError))
                 }
             }
@@ -44,10 +45,22 @@ class MarvelAPIClientServiceImpl: APIClientService {
 
     func makeEndpointURL<T: APIRequest>(for request: T) -> URL? {
         var components = URLComponents()
-        components.scheme = "https"
-        components.host = GlobalConstants.MarvelAPI.baseEndpoint
-        components.path = request.resourceName + "?apikey=\(GlobalConstants.MarvelAPI.publicKey)"
+        components.scheme = GlobalConstants.MarvelAPI.scheme
+        components.host = GlobalConstants.MarvelAPI.host
+        components.path = GlobalConstants.MarvelAPI.basePath + request.resourceName
+        components.port = GlobalConstants.MarvelAPI.port
+        components.queryItems = parameters(for: request)
         return components.url
+    }
+
+    func parameters<T: APIRequest>(for request: T) -> [URLQueryItem] {
+        var parameters = request.parameters.map {
+            // converts the value from Any to String
+            URLQueryItem(name: $0.key, value: String(describing: $0.value))
+        }
+        parameters.append(URLQueryItem(name: GlobalConstants.MarvelAPI.Parameters.apiKey,
+                                       value: GlobalConstants.MarvelAPI.publicKey))
+        return parameters
     }
 }
 
@@ -58,6 +71,10 @@ class GetCharactersRequest: APIRequest {
         return "/characters"
     }
 
+    var parameters: [String: Any] {
+        return ["limit": limit]
+    }
+
     let limit: Int
 
     init(limit: Int = 10) {
@@ -65,6 +82,4 @@ class GetCharactersRequest: APIRequest {
     }
 }
 
-struct Character: Decodable {
-
-}
+struct Character: Decodable {}
