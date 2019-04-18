@@ -19,6 +19,7 @@
 		A418CCB4225E0FA100FF9EE6 /* BasicNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A418CCB3225E0FA100FF9EE6 /* BasicNetworkingTests.swift */; };
 		A418CCBF225E102500FF9EE6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A418CCBE225E102500FF9EE6 /* DatabaseManager.swift */; };
 		A418CCC1225E2F3800FF9EE6 /* DatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A418CCC0225E2F3800FF9EE6 /* DatabaseManagerTests.swift */; };
+		ED033A02226921A700AFA484 /* md5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED033A01226921A700AFA484 /* md5.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		A418CCB5225E0FA100FF9EE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A418CCBE225E102500FF9EE6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		A418CCC0225E2F3800FF9EE6 /* DatabaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTests.swift; sourceTree = "<group>"; };
+		ED033A01226921A700AFA484 /* md5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = md5.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				A40CDC9E226615EC00A97E93 /* APIRequest.swift */,
 				A40CDCA02266166100A97E93 /* URLSessionProtocol.swift */,
 				A40CDCA22266226800A97E93 /* GlobalConstants.swift */,
+				ED033A01226921A700AFA484 /* md5.swift */,
 			);
 			path = BasicNetworking;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			files = (
 				A40CDCA12266166100A97E93 /* URLSessionProtocol.swift in Sources */,
 				A418CCA1225E0F9F00FF9EE6 /* ViewController.swift in Sources */,
+				ED033A02226921A700AFA484 /* md5.swift in Sources */,
 				A418CC9F225E0F9F00FF9EE6 /* AppDelegate.swift in Sources */,
 				A418CCBF225E102500FF9EE6 /* DatabaseManager.swift in Sources */,
 				A40CDCA32266226800A97E93 /* GlobalConstants.swift in Sources */,

@@ -21,8 +21,6 @@ class MarvelAPIClientServiceImpl: APIClientService {
 
     func send<T>(_ request: T, completion: @escaping (Result<T.Response, Error>) -> Void) where T: APIRequest {
         let endpointURL = makeEndpointURL(for: request)
-        
-        print(endpointURL)
 
         guard let url = endpointURL else {
             return
@@ -33,6 +31,7 @@ class MarvelAPIClientServiceImpl: APIClientService {
             } else if let data = data {
                 let decoder = JSONDecoder()
                 do {
+                    print(String(decoding: data, as: UTF8.self))
                     let characters = try decoder.decode(T.Response.self, from: data)
                     completion(.success(characters))
                 } catch let decondingError {
@@ -47,20 +46,39 @@ class MarvelAPIClientServiceImpl: APIClientService {
         var components = URLComponents()
         components.scheme = GlobalConstants.MarvelAPI.scheme
         components.host = GlobalConstants.MarvelAPI.host
-        components.path = GlobalConstants.MarvelAPI.basePath + request.resourceName
+        components.path = path(for: request)
         components.port = GlobalConstants.MarvelAPI.port
         components.queryItems = parameters(for: request)
         return components.url
     }
+    
+    func path<T: APIRequest>(for request: T) -> String {
+        return GlobalConstants.MarvelAPI.basePath + request.resourceName
+    }
 
     func parameters<T: APIRequest>(for request: T) -> [URLQueryItem] {
-        var parameters = request.parameters.map {
+        return encryptionParameters() + filterParameters(for: request)
+    }
+    
+    func encryptionParameters() -> [URLQueryItem] {
+        // Common query items needed for all Marvel requests
+        let timestamp = "\(Date().timeIntervalSince1970)"
+        let hash = "\(timestamp)\(GlobalConstants.MarvelAPI.privateKey)\(GlobalConstants.MarvelAPI.publicKey)".md5
+        return [
+            URLQueryItem(name: GlobalConstants.MarvelAPI.Parameters.timestamp,
+                         value: timestamp),
+            URLQueryItem(name: GlobalConstants.MarvelAPI.Parameters.hash,
+                         value: hash),
+            URLQueryItem(name: GlobalConstants.MarvelAPI.Parameters.apiKey,
+                         value: GlobalConstants.MarvelAPI.publicKey)
+        ]
+    }
+    
+    func filterParameters<T: APIRequest>(for request: T) -> [URLQueryItem] {
+        return request.parameters.map {
             // converts the value from Any to String
             URLQueryItem(name: $0.key, value: String(describing: $0.value))
         }
-        parameters.append(URLQueryItem(name: GlobalConstants.MarvelAPI.Parameters.apiKey,
-                                       value: GlobalConstants.MarvelAPI.publicKey))
-        return parameters
     }
 }
 

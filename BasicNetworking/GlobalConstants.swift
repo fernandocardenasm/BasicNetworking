@@ -17,6 +17,8 @@ struct GlobalConstants {
         static let basePath = "/v1/public"
         
         struct Parameters {
+            static let timestamp = "ts"
+            static let hash = "hash"
             static let apiKey = "apikey"
             static let limit = "limit"
         }
