@@ -1,16 +1,35 @@
 PODS:
   - CryptoSwift (1.0.0)
+  - RxBlocking (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.5.0)
+  - RxTest (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
 
 DEPENDENCIES:
   - CryptoSwift (~> 1.0.0)
+  - RxBlocking (~> 4.5.0)
+  - RxCocoa (~> 4.5.0)
+  - RxSwift (~> 4.5.0)
+  - RxTest (~> 4.5.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CryptoSwift
+    - RxBlocking
+    - RxCocoa
+    - RxSwift
+    - RxTest
 
 SPEC CHECKSUMS:
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
+  RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
 
-PODFILE CHECKSUM: 44e71bed13ec8e25454e438cf92966180edc76de
+PODFILE CHECKSUM: 6125ac97827d023e1e50e7034142b1ac036346c4
 
 COCOAPODS: 1.5.0
