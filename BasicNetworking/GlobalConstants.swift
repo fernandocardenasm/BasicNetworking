@@ -15,7 +15,11 @@ struct GlobalConstants {
         static let host = "gateway.marvel.com"
         static let port = 443
         static let basePath = "/v1/public"
-        
+
+        struct Paths {
+            static let characters = "/characters"
+        }
+
         struct Parameters {
             static let timestamp = "ts"
             static let hash = "hash"
