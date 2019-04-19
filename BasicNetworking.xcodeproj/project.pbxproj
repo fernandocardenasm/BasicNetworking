@@ -23,7 +23,6 @@
 		ED24DFDE2269BF0E00C70C33 /* MarvelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED24DFDD2269BF0E00C70C33 /* MarvelResponse.swift */; };
 		ED24DFE02269C48500C70C33 /* ComicCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED24DFDF2269C48500C70C33 /* ComicCharacter.swift */; };
 		ED24DFE22269C4AA00C70C33 /* MarvelImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED24DFE12269C4AA00C70C33 /* MarvelImage.swift */; };
-		ED24DFE42269C73500C70C33 /* MarvelAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED24DFE32269C73500C70C33 /* MarvelAPIError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +60,6 @@
 		ED24DFDD2269BF0E00C70C33 /* MarvelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelResponse.swift; sourceTree = "<group>"; };
 		ED24DFDF2269C48500C70C33 /* ComicCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicCharacter.swift; sourceTree = "<group>"; };
 		ED24DFE12269C4AA00C70C33 /* MarvelImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelImage.swift; sourceTree = "<group>"; };
-		ED24DFE32269C73500C70C33 /* MarvelAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelAPIError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +118,6 @@
 				ED24DFDD2269BF0E00C70C33 /* MarvelResponse.swift */,
 				ED24DFDF2269C48500C70C33 /* ComicCharacter.swift */,
 				ED24DFE12269C4AA00C70C33 /* MarvelImage.swift */,
-				ED24DFE32269C73500C70C33 /* MarvelAPIError.swift */,
 			);
 			path = BasicNetworking;
 			sourceTree = "<group>";
@@ -342,7 +339,6 @@
 			files = (
 				ED24DFDC2269BE3F00C70C33 /* MarvelDataContainer.swift in Sources */,
 				A40CDCA12266166100A97E93 /* URLSessionProtocol.swift in Sources */,
-				ED24DFE42269C73500C70C33 /* MarvelAPIError.swift in Sources */,
 				A418CCA1225E0F9F00FF9EE6 /* ViewController.swift in Sources */,
 				ED24DFE02269C48500C70C33 /* ComicCharacter.swift in Sources */,
 				ED24DFE22269C4AA00C70C33 /* MarvelImage.swift in Sources */,
@@ -499,7 +495,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SAR2G9PZXH;
 				INFOPLIST_FILE = BasicNetworking/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = fernandocardenasm.BasicNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -515,7 +514,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SAR2G9PZXH;
 				INFOPLIST_FILE = BasicNetworking/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = fernandocardenasm.BasicNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -532,7 +534,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SAR2G9PZXH;
 				INFOPLIST_FILE = BasicNetworkingTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = fernandocardenasm.BasicNetworkingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -550,7 +556,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SAR2G9PZXH;
 				INFOPLIST_FILE = BasicNetworkingTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = fernandocardenasm.BasicNetworkingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
