@@ -27,6 +27,7 @@ class MarvelAPIClientServiceImpl: APIClientService {
             let endpointURL = self?.makeEndpointURL(for: request)
 
             guard let url = endpointURL else {
+                single(.error(NetworkError.invalidURL))
                 return disposables
             }
             let task = self?.session.dataTask(with: url) { data, _, error in

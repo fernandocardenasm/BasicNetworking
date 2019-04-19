@@ -25,8 +25,12 @@ struct MarvelImage: Decodable {
                                                  forKey: .fileExtension)
         
         guard let url = URL(string: "\(path).\(fileExtension)") else {
-            throw MarvelAPIError.dataDecodingFailed
+            throw NetworkError.invalidURL
         }
         self.url = url
     }
+}
+
+enum NetworkError: Error {
+    case invalidURL
 }

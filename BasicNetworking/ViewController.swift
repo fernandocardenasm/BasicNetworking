@@ -10,18 +10,28 @@ import UIKit
 
 class ViewController: UIViewController {
     let disposeBag = DisposeBag()
+    
+    var comicCharactersViewModel: ComicCharactersViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
         let request = GetCharactersRequest(limit: 10)
-
         let apiClientService = MarvelAPIClientServiceImpl()
-        apiClientService.send(request).subscribe(onSuccess: { comicCharacters in
-            print(comicCharacters.first?.thumbnail?.url)
-        }) { error in
-            print(error.localizedDescription)
-        }.disposed(by: disposeBag)
+        comicCharactersViewModel = ComicCharactersViewModel(clientService: apiClientService)
+        
+        setupBindings()
+        
+        comicCharactersViewModel?.fetchComicCharacters(request: request)
+    }
+    
+    func setupBindings() {
+        comicCharactersViewModel?
+            .comicCharacters
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { comicCharacters in
+                print(comicCharacters)
+            }).disposed(by: disposeBag)
     }
 }
