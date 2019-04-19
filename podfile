@@ -11,5 +11,6 @@ target 'BasicNetworking' do
 	inherit! :search_paths
         pod 'RxBlocking', '~> 4.5.0'
     	pod 'RxTest', '~> 4.5.0'
+	pod 'Nimble', '~> 8.0.1'
     end
 end

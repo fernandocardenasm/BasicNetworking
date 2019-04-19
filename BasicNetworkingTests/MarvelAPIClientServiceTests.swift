@@ -9,6 +9,7 @@
 import RxTest
 import XCTest
 import CryptoSwift
+import Nimble
 
 class MarvelAPIClientService: XCTestCase {
     func test_encryptionParameters() {
@@ -18,17 +19,17 @@ class MarvelAPIClientService: XCTestCase {
         let parameters = service.encryptionParameters()
         
         // timestamp
-        XCTAssertEqual(parameters.first?.name, GlobalConstants.MarvelAPI.Parameters.timestamp)
+        expect(parameters.first?.name).to(equal(GlobalConstants.MarvelAPI.Parameters.timestamp))
         let timestamp = parameters.first?.value
-        XCTAssertNotNil(timestamp)
+        expect(timestamp).notTo(beNil())
         
         //hash
-        XCTAssertEqual(parameters[1].name, GlobalConstants.MarvelAPI.Parameters.hash)
+        expect(parameters[1].name).to(equal(GlobalConstants.MarvelAPI.Parameters.hash))
         let hash = "\(timestamp ?? "")\(GlobalConstants.MarvelAPI.privateKey)\(GlobalConstants.MarvelAPI.publicKey)".md5()
-        XCTAssertEqual(parameters[1].value, hash)
+        expect(parameters[1].value).to(equal(hash))
         
         //apikey
-        XCTAssertEqual(parameters.last?.name, GlobalConstants.MarvelAPI.Parameters.apiKey)
-        XCTAssertNotNil(parameters.last?.value, GlobalConstants.MarvelAPI.publicKey)
+        expect(parameters.last?.name).to(equal(GlobalConstants.MarvelAPI.Parameters.apiKey))
+        expect(parameters.last?.value).to(equal(GlobalConstants.MarvelAPI.publicKey))
     }
 }
