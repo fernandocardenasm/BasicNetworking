@@ -1,0 +1,6 @@
+platform :ios, '10.0'
+use_frameworks!
+
+target 'BasicNetworking' do
+  pod 'CryptoSwift', '~> 1.0.0'
+end
