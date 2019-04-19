@@ -23,7 +23,6 @@ struct MarvelImage: Decodable {
                                         forKey: .path)
         let fileExtension = try container.decode(String.self,
                                                  forKey: .fileExtension)
-        
         guard let url = URL(string: "\(path).\(fileExtension)") else {
             throw NetworkError.invalidURL
         }
@@ -31,6 +30,3 @@ struct MarvelImage: Decodable {
     }
 }
 
-enum NetworkError: Error {
-    case invalidURL
-}

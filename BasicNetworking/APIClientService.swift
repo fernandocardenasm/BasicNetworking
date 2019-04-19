@@ -93,21 +93,3 @@ class MarvelAPIClientServiceImpl: APIClientService {
         }
     }
 }
-
-class GetCharactersRequest: APIRequest {
-    typealias Response = [ComicCharacter]
-
-    var resourceName: String {
-        return GlobalConstants.MarvelAPI.Paths.characters
-    }
-
-    var parameters: [String: Any] {
-        return [GlobalConstants.MarvelAPI.Parameters.limit: limit]
-    }
-
-    let limit: Int
-
-    init(limit: Int = 10) {
-        self.limit = limit
-    }
-}

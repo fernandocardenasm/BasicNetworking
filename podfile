@@ -5,10 +5,11 @@ target 'BasicNetworking' do
   pod 'CryptoSwift', '~> 1.0.0'
   pod 'RxSwift', '~> 4.5.0'
   pod 'RxCocoa', '~> 4.5.0'
-end
 
-# RxTest and RxBlocking make the most sense in the context of unit/integration tests
-target 'BasicNetworkingTests' do
-    pod 'RxBlocking', '~> 4.5.0'
-    pod 'RxTest', '~> 4.5.0'
+  # RxTest and RxBlocking make the most sense in the context of unit/integration tests
+  target 'BasicNetworkingTests' do
+	inherit! :search_paths
+        pod 'RxBlocking', '~> 4.5.0'
+    	pod 'RxTest', '~> 4.5.0'
+    end
 end
