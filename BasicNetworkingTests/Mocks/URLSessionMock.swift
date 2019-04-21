@@ -22,12 +22,6 @@ class URLSessionMock: URLSessionProtocol {
         self.newDataTask = newDataTask
     }
     
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
-        self.request = request
-        completionHandler(data, response, error)
-        return newDataTask
-    }
-    
     func dataTask(with url: URL, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
         self.url = url
         completionHandler(data, response, error)

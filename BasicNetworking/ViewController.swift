@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
-        let request = GetComicCharactersRequest(limit: 10)
+        let request = GetComicCharactersRequest(limit: 1)
         let apiClientService = MarvelAPIClientServiceImpl()
         comicCharactersViewModel = ComicCharactersViewModel(clientService: apiClientService)
         
