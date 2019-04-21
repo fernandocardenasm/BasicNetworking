@@ -6,15 +6,14 @@
 //
 
 @testable import BasicNetworking
-import RxTest
-import XCTest
 import CryptoSwift
 import Nimble
+import RxTest
+import XCTest
 
 class MarvelAPIClientService: XCTestCase {
     func test_encryptionParameters() {
-        let dataTask = URLSessionDataTaskMock()
-        let session = URLSessionMock(newDataTask: dataTask)
+        let session = URLSessionMock()
         let service = MarvelAPIClientServiceImpl(session: session)
         let parameters = service.encryptionParameters()
         
@@ -23,61 +22,49 @@ class MarvelAPIClientService: XCTestCase {
         let timestamp = parameters.first?.value
         expect(timestamp).notTo(beNil())
         
-        //hash
+        // hash
         expect(parameters[1].name).to(equal(GlobalConstants.MarvelAPI.Parameters.hash))
         let hash = "\(timestamp ?? "")\(GlobalConstants.MarvelAPI.privateKey)\(GlobalConstants.MarvelAPI.publicKey)".md5()
         expect(parameters[1].value).to(equal(hash))
         
-        //apikey
+        // apikey
         expect(parameters.last?.name).to(equal(GlobalConstants.MarvelAPI.Parameters.apiKey))
         expect(parameters.last?.value).to(equal(GlobalConstants.MarvelAPI.publicKey))
     }
     
     func test_filterParameters() {
-        let dataTask = URLSessionDataTaskMock()
-        let session = URLSessionMock(newDataTask: dataTask)
+        let session = URLSessionMock()
         let service = MarvelAPIClientServiceImpl(session: session)
-        let filterParameters = makeFilterParameters()
-        let request = RequestMock(resourceName: "/resourceName",
-                                  parameters: filterParameters)
+        // it could be any request
+        let request = GetComicCharactersRequest(limit: 10)
         let parameters = service.filterParameters(for: request)
-        expect(parameters.count).to(equal(filterParameters.count))
         parameters.forEach {
-            expect(filterParameters.keys.contains($0.name)).to(beTrue())
-            expect("\(filterParameters[$0.name] ?? "")").to(equal($0.value))
+            expect("\(request.parameters[$0.name] ?? "")").to(equal($0.value))
         }
     }
     
-    func test_makeEndpointURL_validURL() {
-        let dataTask = URLSessionDataTaskMock()
-        let session = URLSessionMock(newDataTask: dataTask)
+    func test_makeEndpointURL_getComicCharactersRequest() {
+        let session = URLSessionMock()
         let service = MarvelAPIClientServiceImpl(session: session)
-        let filterParameters = makeFilterParameters()
-        let request = RequestMock(resourceName: "/resourceName",
-                                  parameters: filterParameters)
-        let url = service.makeEndpointURL(for: request)
-        expect(url).notTo(beNil())
-    }
-    
-    func makeFilterParameters() -> [String: Any] {
-        return ["int": 0,
-                "double": 1.0,
-                "string":"",
-                "boolean": true]
-    }
-}
-
-class RequestMock: APIRequest {
-    typealias Response = String
-    
-    let resourceName: String
-    let parameters: [String: Any]
-    
-    init(resourceName: String, parameters: [String: Any]) {
-        self.resourceName = resourceName
-        self.parameters = parameters
-    }
-    
-    func encode(to encoder: Encoder) throws {
+        // it could be any request
+        let request = GetComicCharactersRequest(limit: 10)
+        guard let url = service.makeEndpointURL(for: request) else {
+            XCTFail("The URL must exist")
+            return
+        }
+        expect(url.scheme).to(equal(GlobalConstants.MarvelAPI.scheme))
+        expect(url.host).to(equal(request.host))
+        expect(url.path).to(equal(request.path))
+        expect(url.port).to(equal(GlobalConstants.MarvelAPI.port))
+        
+        // the query contains encryption parameter keys
+        service.encryptionParameters().forEach {
+            expect(url.query?.contains($0.name)).to(beTrue())
+        }
+        // the query contains also the filter parameter keys and values
+        service.filterParameters(for: request).forEach {
+            expect(url.query?.contains($0.name)).to(beTrue())
+            expect(url.query?.contains($0.value ?? "")).to(beTrue())
+        }
     }
 }

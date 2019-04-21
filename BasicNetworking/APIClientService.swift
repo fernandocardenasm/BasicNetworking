@@ -56,19 +56,11 @@ class MarvelAPIClientServiceImpl: APIClientService {
     func makeEndpointURL<T: APIRequest>(for request: T) -> URL? {
         var components = URLComponents()
         components.scheme = GlobalConstants.MarvelAPI.scheme
-        components.host = GlobalConstants.MarvelAPI.host
-        components.path = path(for: request)
+        components.host = request.host
+        components.path = request.path
         components.port = GlobalConstants.MarvelAPI.port
-        components.queryItems = parameters(for: request)
+        components.queryItems = encryptionParameters() + filterParameters(for: request)
         return components.url
-    }
-
-    func path<T: APIRequest>(for request: T) -> String {
-        return GlobalConstants.MarvelAPI.basePath + request.resourceName
-    }
-
-    func parameters<T: APIRequest>(for request: T) -> [URLQueryItem] {
-        return encryptionParameters() + filterParameters(for: request)
     }
 
     func encryptionParameters() -> [URLQueryItem] {

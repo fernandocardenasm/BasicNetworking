@@ -10,8 +10,10 @@ import Foundation
 // All the requests implements this protocol
 protocol APIRequest: Encodable {
     associatedtype Response: Decodable
+    
+    var host: String { get }
 
-    var resourceName: String { get }
+    var path: String { get }
     
     var parameters: [String: Any] { get }
 }

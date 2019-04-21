@@ -18,7 +18,7 @@ class URLSessionMock: URLSessionProtocol {
     
     let newDataTask: URLSessionDataTaskMock
     
-    init(newDataTask: URLSessionDataTaskMock) {
+    init(newDataTask: URLSessionDataTaskMock = URLSessionDataTaskMock()) {
         self.newDataTask = newDataTask
     }
     
