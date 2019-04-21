@@ -8,26 +8,98 @@
 @testable import BasicNetworking
 import CryptoSwift
 import Nimble
-import RxTest
 import RxSwift
+import RxTest
 import XCTest
 
 class MarvelAPIClientServiceTests: XCTestCase {
+    var disposeBag: DisposeBag!
+    
+    override func setUp() {
+        disposeBag = DisposeBag()
+    }
+    
     func test_send_getComicCharactersRequest() {
         let dataTask = URLSessionDataTaskMock()
         let session = URLSessionMock(newDataTask: dataTask)
         session.data = DataMocks.getComicCharactersRequestData()
         let service = MarvelAPIClientServiceImpl(session: session)
         let request = GetComicCharactersRequest()
-        let disposeBag = DisposeBag()
         
         let expSuccess = expectation(description: "Success is called")
-        service.send(request).subscribe(onSuccess: { (comicCharacters) in
+        
+        service.send(request).subscribe(onSuccess: { _ in
             expSuccess.fulfill()
-        }, onError: { (_) in
+        }, onError: { _ in
             XCTFail("This should NOT return error")
         }).disposed(by: disposeBag)
+        
         wait(for: [expSuccess], timeout: 0.1)
+        
+        expect(dataTask.resumeWasCalled).to(beTrue())
+    }
+    
+    func test_send_invalidData_error() {
+        let dataTask = URLSessionDataTaskMock()
+        let session = URLSessionMock(newDataTask: dataTask)
+        session.data = "something_invalid".data(using: .utf8)
+        let service = MarvelAPIClientServiceImpl(session: session)
+        // this could be any request
+        let request = GetComicCharactersRequest()
+        
+        let expError = expectation(description: "Error is called")
+        
+        service.send(request).subscribe(onSuccess: { _ in
+            XCTFail("This should NOT return success")
+        }, onError: { _ in
+            expError.fulfill()
+        }).disposed(by: disposeBag)
+        
+        wait(for: [expError], timeout: 0.1)
+        
+        expect(dataTask.resumeWasCalled).to(beTrue())
+    }
+    
+    func test_send_dataNil_error() {
+        let dataTask = URLSessionDataTaskMock()
+        let session = URLSessionMock(newDataTask: dataTask)
+        session.data = nil
+        let service = MarvelAPIClientServiceImpl(session: session)
+        // it could be any request
+        let request = GetComicCharactersRequest()
+        
+        let expError = expectation(description: "Error is called")
+        
+        service.send(request).subscribe(onSuccess: { _ in
+            XCTFail("This should NOT return success")
+        }, onError: { _ in
+            expError.fulfill()
+        }).disposed(by: disposeBag)
+        
+        wait(for: [expError], timeout: 0.1)
+        
+        expect(dataTask.resumeWasCalled).to(beTrue())
+    }
+    
+    func test_send_existentError_error() {
+        let dataTask = URLSessionDataTaskMock()
+        let session = URLSessionMock(newDataTask: dataTask)
+        session.data = DataMocks.getComicCharactersRequestData()
+        session.error = NSError(domain: "", code: 200)
+        let service = MarvelAPIClientServiceImpl(session: session)
+        // it could be any request
+        let request = GetComicCharactersRequest()
+        
+        let expError = expectation(description: "Error is called")
+        
+        service.send(request).subscribe(onSuccess: { _ in
+            XCTFail("This should NOT return success")
+        }, onError: { _ in
+            expError.fulfill()
+        }).disposed(by: disposeBag)
+        
+        wait(for: [expError], timeout: 0.1)
+        
         expect(dataTask.resumeWasCalled).to(beTrue())
     }
     

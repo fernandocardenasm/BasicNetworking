@@ -45,6 +45,8 @@ class MarvelAPIClientServiceImpl: APIClientService {
                     } catch let decodingError {
                         single(.error(decodingError))
                     }
+                } else {
+                    single(.error(NetworkError.nonexistentData))
                 }
             }
             task?.resume()

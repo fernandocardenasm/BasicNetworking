@@ -8,7 +8,7 @@
 import Foundation
 
 // All the requests implements this protocol
-protocol APIRequest: Encodable {
+protocol APIRequest {
     associatedtype Response: Decodable
     
     var host: String { get }
