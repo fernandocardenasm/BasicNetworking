@@ -20,6 +20,7 @@
 		A418CCC1225E2F3800FF9EE6 /* DatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A418CCC0225E2F3800FF9EE6 /* DatabaseManagerTests.swift */; };
 		ED050019226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED050018226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift */; };
 		ED05001F226CAA7D001B24D5 /* DataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05001E226CAA7D001B24D5 /* DataMocks.swift */; };
+		ED050021226DBE04001B24D5 /* ComicCharactersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED050020226DBE04001B24D5 /* ComicCharactersViewModelTests.swift */; };
 		ED062BD1226A2B8F00AE2BC6 /* ComicCharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED062BD0226A2B8F00AE2BC6 /* ComicCharactersViewModel.swift */; };
 		ED062BD3226A5F0300AE2BC6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED062BD2226A5F0300AE2BC6 /* NetworkError.swift */; };
 		ED062BD8226A612800AE2BC6 /* GetComicCharactersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED062BD7226A612800AE2BC6 /* GetComicCharactersRequest.swift */; };
@@ -63,6 +64,7 @@
 		B9E23918174456556C0644CD /* Pods_BasicNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BasicNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED050018226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetComicCharactersRequestTests.swift; sourceTree = "<group>"; };
 		ED05001E226CAA7D001B24D5 /* DataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMocks.swift; sourceTree = "<group>"; };
+		ED050020226DBE04001B24D5 /* ComicCharactersViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicCharactersViewModelTests.swift; sourceTree = "<group>"; };
 		ED062BD0226A2B8F00AE2BC6 /* ComicCharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicCharactersViewModel.swift; sourceTree = "<group>"; };
 		ED062BD2226A5F0300AE2BC6 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		ED062BD7226A612800AE2BC6 /* GetComicCharactersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetComicCharactersRequest.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				A418CCC0225E2F3800FF9EE6 /* DatabaseManagerTests.swift */,
 				ED062BDC226A699000AE2BC6 /* MarvelAPIClientServiceTests.swift */,
 				ED050018226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift */,
+				ED050020226DBE04001B24D5 /* ComicCharactersViewModelTests.swift */,
 			);
 			path = BasicNetworkingTests;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				ED05001F226CAA7D001B24D5 /* DataMocks.swift in Sources */,
 				ED062BDB226A61FB00AE2BC6 /* URLSessionMock.swift in Sources */,
 				A418CCC1225E2F3800FF9EE6 /* DatabaseManagerTests.swift in Sources */,
+				ED050021226DBE04001B24D5 /* ComicCharactersViewModelTests.swift in Sources */,
 				A418CCB4225E0FA100FF9EE6 /* BasicNetworkingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

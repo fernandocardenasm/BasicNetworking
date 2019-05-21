@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         let apiClientService = MarvelAPIClientServiceImpl()
         comicCharactersViewModel = ComicCharactersViewModel(clientService: apiClientService)
         
+        let viewModel = ResponseViewModel<GetComicCharactersRequest>(clientService: apiClientService)
+        
         setupBindings()
         
         comicCharactersViewModel?.fetchComicCharacters(request: request)

@@ -35,3 +35,30 @@ class ComicCharactersViewModel {
             }.disposed(by: disposeBag)
     }
 }
+
+// More Generic View Model
+
+class ResponseViewModel<T: APIRequest> {
+    let clientService: APIClientService
+    
+    // Output
+    let response = PublishSubject<T.Response>()
+    
+    let disposeBag = DisposeBag()
+    
+    init(clientService: APIClientService) {
+        self.clientService = clientService
+    }
+    
+    func fetchResponse(request: T) {
+        clientService
+            .send(request)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .subscribe(onSuccess: { [weak self] response in
+                self?.response.onNext(response)
+            }) { [weak self] error in
+                self?.response.onError(error)
+            }.disposed(by: disposeBag)
+    }
+}
+
