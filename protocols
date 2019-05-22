@@ -1,0 +1,84 @@
+
+import UIKit
+import XCTest
+
+protocol DataTask {
+    func resume()
+}
+
+protocol Session {
+    associatedtype Task: DataTask
+
+    func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> Task
+}
+
+extension URLSession: Session {}
+
+extension URLSessionDataTask: DataTask {}
+
+// needs to be a generic, because the protocol has an associatedType, otherwise a compiler error is shown.
+final class WeatherAPI<S: Session> {
+    let session: S
+
+    init(session: S) {
+        self.session = session
+    }
+
+    func run() {
+        guard let url = URL(string: "someweatherstartup.com") else {
+            fatalError("Could not create url")
+        }
+        let task = session.dataTask(with: url) { _, _, _ in
+            // Work with retrieved data
+            print("Something")
+        }
+        task.resume()
+    }
+}
+
+let weatherAPI = WeatherAPI(session: URLSession.shared)
+weatherAPI.run()
+
+struct MockTask: DataTask {
+    let expectedURLs: [URL]
+    let url: URL
+    let expectation: XCTestExpectation
+
+    func resume() {
+        guard expectedURLs.contains(url) else {
+            return
+        }
+
+        expectation.fulfill()
+    }
+}
+
+class MockSession: Session {
+    let expectedURLs: [URL]
+    let expectation: XCTestExpectation
+
+    init(expectation: XCTestExpectation, expectedURLs: [URL]) {
+        self.expectation = expectation
+        self.expectedURLs = expectedURLs
+    }
+
+    func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> MockTask {
+        return MockTask(expectedURLs: expectedURLs, url: url, expectation: expectation)
+    }
+}
+
+class APITestCase: XCTestCase {
+    var api: WeatherAPI<MockSession>!
+
+    func testAPI() {
+        let expecation = XCTestExpectation(description: "Expected someweatherstartup.com")
+        let session = MockSession(expectation: expecation, expectedURLs: [URL(string: "www.someweatherstartup.com")!])
+
+        api = WeatherAPI(session: session)
+        api.run()
+        wait(for: [expecation], timeout: 1)
+    }
+}
+
+let testCase = APITestCase()
+testCase.testAPI()

@@ -1,0 +1,247 @@
+
+import UIKit
+
+var str = "Hello, playground"
+
+// Example With ONLY Protocols
+
+protocol Buildable {}
+
+struct Building: Buildable { }
+
+struct Farm: Buildable { }
+
+let buildings: [Buildable] = [Building(), Farm()]
+
+// Example with ONLY generics
+
+struct House<U> {
+    let data: U
+}
+
+let house = House(data: "")
+
+let houses = [house, house, House(data: "")]
+
+// This not work because the houses must have the same U
+// let houses = [house, house, House(data: 5)]
+
+// Example with Generics and Protocols
+
+struct Pair<T: Hashable, U: Hashable> {
+    let left: T
+    let right: U
+}
+
+let pair = Pair(left: "", right: "")
+let pairInt = Pair(left: 2, right: 4)
+
+// This does not work, they are pair, but the types for the generics are not the same.
+//let pairs = [pair, pairInt]
+
+// Example to show the difference for the compiling and run time protocols vs generics
+protocol CryptoCurrency {
+    var name: String { get }
+}
+
+struct Bitcoin: CryptoCurrency {
+    var name: String
+
+    func calculate() { }
+}
+
+struct Ethereum: CryptoCurrency {
+    var name: String
+}
+
+func retrievePriceRunTime(coin: CryptoCurrency, completion: (CryptoCurrency) -> ()) {
+    print(coin.name)
+}
+
+func retrievePriceCompileTime<Coin: CryptoCurrency>(coin: Coin, completion: (Coin) -> ()) {
+    print(coin.name)
+}
+
+let btc = Bitcoin(name: "bitcoin")
+retrievePriceCompileTime(coin: btc) { (currency) in
+    // It identifies the type that is a Bitcoin, so it
+    currency.calculate()
+}
+
+retrievePriceRunTime(coin: btc) { (currency) in
+    // It is CryptoCurrency, so it does not find the func calculate()
+}
+
+// Addings Genericsin dics
+
+protocol Ingredient { }
+
+struct Recipe<I: Ingredient> {
+    let ingredients: [I]
+    let instructions: String
+}
+
+struct Apple: Ingredient { }
+
+struct Pear: Ingredient { }
+
+// This does not work because even if they implement the same protocol, they are still diferent types (Apple) and (Pear). It only works if all the ingredients are the same, for that reason better to not use generics, but protocols.
+//let recipe = Recipe(ingredients: [Apple(), Pear()], instructions: "")
+
+// Example of Protocols with AssocitedTypes
+
+protocol Damage {
+    func severe()
+}
+
+protocol Enemy {
+    func attack() -> Damage
+}
+
+struct Fire: Damage {
+    func severe() { }
+
+    func lethal() { }
+}
+
+struct Dragon: Enemy {
+    func attack() -> Damage {
+        return Fire()
+    }
+}
+
+// Without the associtedType the attack method only conforms to Damage, but in compile time we do not that is a Fire one.
+let dragon = Dragon()
+
+protocol EnemyGeneric {
+    associatedtype DamageType: Damage
+
+    func attack() -> DamageType
+}
+
+struct DragonGeneric: EnemyGeneric {
+    // It is not neccesary to define the typealias here
+    func attack() -> Fire {
+        return Fire()
+    }
+}
+
+// The generic dragon attack has the method available from Damage, but also its own methods lethal.
+let genericDragon = DragonGeneric()
+
+// Example of passing protocols with associatedTypes
+
+protocol Worker {
+    associatedtype Input
+    associatedtype Output
+
+    func start(input: Input) -> Output
+}
+
+struct Employer: Worker {
+    typealias Input = String
+    typealias Output = Int
+    func start(input: Input) -> Output {
+        return 1
+    }
+}
+
+let employer = Employer()
+employer.start(input: "")
+
+// This does not work because the protocol has an associatedType
+//func runWorker(worker: Worker) { }
+
+// For that reason, we need to use generics
+protocol Company {
+    func runWorker<W: Worker>(worker: W, input: W.Input)
+}
+
+struct ING: Company {
+    func runWorker<W>(worker: W, input: W.Input) where W : Worker {
+        worker.start(input: input)
+    }
+}
+
+// Example for Types constraining associatedTypes
+
+class ImageCropper: Worker {
+    let size: CGSize
+    init(size: CGSize) {
+        self.size = size
+    }
+
+    func start(input: UIImage) -> Bool {
+        return true
+    }
+}
+
+class ImageProcessor<W: Worker> where W.Input == UIImage, W.Output == Bool {
+    let worker: W
+
+    init(worker: W) {
+        self.worker = worker
+    }
+
+    func process() {
+        // when we define the type for Input and Output, now we can be sure what we can do that the input an Image is and the output a boolean is, during the compiling time.
+        worker.start(input: UIImage())
+    }
+}
+
+// Protocol inheratence
+
+protocol ImageWorker: Worker where Input == UIImage, Output == Bool {
+
+}
+
+// We avoid adding the where in the class, but we use protocol inheretance for it,
+class ImageProcessorInheretedWorker<I: ImageWorker> {
+}
+
+// Example
+
+protocol Playable {
+    associatedtype Input
+
+    var contents: Input { get }
+
+    func play()
+}
+
+final class Movie: Playable {
+    let contents: URL
+
+    init(contents: URL) {
+        self.contents = contents
+    }
+
+    func play() {
+        print("Playing video at \(6)")
+    }
+}
+
+struct AudioFile { }
+
+final class Song: Playable {
+    let contents: AudioFile
+
+    init(contents: AudioFile) {
+        self.contents = contents
+    }
+
+    func play() {
+        print("Playing song")
+    }
+}
+
+final class Playlist<P: Playable> {
+    private var queue = [P]()
+
+    func addToQueue(playable: P) {
+        queue.append(playable)
+    }
+}
+
+let playlistMovies = Playlist<Movie>()
+playlistMovies.addToQueue(playable: Movie(contents: URL(fileReferenceLiteralResourceName: "")))
