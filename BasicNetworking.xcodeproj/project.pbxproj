@@ -19,6 +19,7 @@
 		A418CCB4225E0FA100FF9EE6 /* BasicNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A418CCB3225E0FA100FF9EE6 /* BasicNetworkingTests.swift */; };
 		A418CCC1225E2F3800FF9EE6 /* DatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A418CCC0225E2F3800FF9EE6 /* DatabaseManagerTests.swift */; };
 		A4C7786922E74F94005D2461 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C7786822E74F94005D2461 /* KeychainWrapper.swift */; };
+		A4C7786B22E74FEE005D2461 /* KeychainWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C7786A22E74FEE005D2461 /* KeychainWrapperTests.swift */; };
 		ED050019226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED050018226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift */; };
 		ED05001F226CAA7D001B24D5 /* DataMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED05001E226CAA7D001B24D5 /* DataMocks.swift */; };
 		ED050021226DBE04001B24D5 /* ComicCharactersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED050020226DBE04001B24D5 /* ComicCharactersViewModelTests.swift */; };
@@ -63,6 +64,7 @@
 		A418CCB5225E0FA100FF9EE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A418CCC0225E2F3800FF9EE6 /* DatabaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTests.swift; sourceTree = "<group>"; };
 		A4C7786822E74F94005D2461 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		A4C7786A22E74FEE005D2461 /* KeychainWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapperTests.swift; sourceTree = "<group>"; };
 		B9E23918174456556C0644CD /* Pods_BasicNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BasicNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED050018226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetComicCharactersRequestTests.swift; sourceTree = "<group>"; };
 		ED05001E226CAA7D001B24D5 /* DataMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMocks.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				ED062BDC226A699000AE2BC6 /* MarvelAPIClientServiceTests.swift */,
 				ED050018226C6AA1001B24D5 /* GetComicCharactersRequestTests.swift */,
 				ED050020226DBE04001B24D5 /* ComicCharactersViewModelTests.swift */,
+				A4C7786A22E74FEE005D2461 /* KeychainWrapperTests.swift */,
 			);
 			path = BasicNetworkingTests;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				ED05001F226CAA7D001B24D5 /* DataMocks.swift in Sources */,
 				ED062BDB226A61FB00AE2BC6 /* URLSessionMock.swift in Sources */,
 				A418CCC1225E2F3800FF9EE6 /* DatabaseManagerTests.swift in Sources */,
+				A4C7786B22E74FEE005D2461 /* KeychainWrapperTests.swift in Sources */,
 				ED050021226DBE04001B24D5 /* ComicCharactersViewModelTests.swift in Sources */,
 				A418CCB4225E0FA100FF9EE6 /* BasicNetworkingTests.swift in Sources */,
 			);
